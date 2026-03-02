@@ -1,0 +1,205 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "refresh": "Refresh",
+    "download": "Download",
+    "upload": "Upload",
+    "view": "View",
+    "details": "Details",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back! Please sign in to your account.",
+      "email": "Email Address",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "haveAccount": "Already have an account?"
+    },
+    "register": {
+      "title": "Sign Up",
+      "subtitle": "Create your account to get started.",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "signUp": "Sign Up",
+      "signIn": "Sign In",
+      "agreeToTerms": "I agree to the Terms of Service and Privacy Policy",
+      "termsAndPrivacy": "Terms of Service and Privacy Policy"
+    },
+    "logout": "Logout",
+    "profile": "Profile"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "ecgAnalysis": "ECG Analysis",
+    "history": "History",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "ecg": {
+    "upload": {
+      "title": "Upload ECG Data",
+      "subtitle": "Upload your ECG file for analysis",
+      "dropZone": "Drag and drop your ECG file here, or click to select",
+      "acceptedFormats": "Accepted formats: .dat, .csv, .txt",
+      "maxFileSize": "Maximum file size: 10MB",
+      "selectFile": "Select File",
+      "analyze": "Analyze ECG",
+      "clear": "Clear",
+      "preview": "Preview",
+      "uploading": "Uploading...",
+      "analyzing": "Analyzing...",
+      "fileSelected": "File selected: {{fileName}}",
+      "noFileSelected": "No file selected"
+    },
+    "chart": {
+      "title": "ECG Signal Visualization",
+      "lead": "Lead {{leadNumber}}",
+      "time": "Time (s)",
+      "voltage": "Voltage (mV)",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "resetZoom": "Reset Zoom",
+      "pan": "Pan",
+      "selectLead": "Select Lead"
+    },
+    "results": {
+      "title": "Analysis Results",
+      "predictedDiagnosis": "Predicted Diagnosis",
+      "confidence": "Confidence",
+      "probabilities": "Class Probabilities",
+      "normal": "Normal",
+      "myocardialInfarction": "Myocardial Infarction",
+      "ischemia": "Ischemia",
+      "conductionDisorder": "Conduction Disorder",
+      "hypertrophy": "Hypertrophy",
+      "analysisDate": "Analysis Date",
+      "recordId": "Record ID",
+      "downloadReport": "Download Report"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}!",
+    "subtitle": "ECG Analysis Dashboard",
+    "quickActions": "Quick Actions",
+    "uploadECG": "Upload ECG",
+    "viewHistory": "View History",
+    "statistics": "Statistics",
+    "totalRecords": "Total Records",
+    "normal": "Normal",
+    "abnormal": "Abnormal",
+    "recentAnalysis": "Recent Analysis",
+    "noRecentAnalysis": "No recent analysis found",
+    "viewAll": "View All"
+  },
+  "history": {
+    "title": "Analysis History",
+    "subtitle": "View your previous ECG analysis results",
+    "filters": {
+      "dateRange": "Date Range",
+      "diagnosis": "Diagnosis",
+      "sortBy": "Sort By",
+      "all": "All"
+    },
+    "columns": {
+      "date": "Date",
+      "diagnosis": "Diagnosis",
+      "confidence": "Confidence",
+      "actions": "Actions"
+    },
+    "noRecords": "No analysis records found",
+    "deleteConfirmation": "Are you sure you want to delete this record?",
+    "deleteSuccess": "Record deleted successfully"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "notifications": "Notifications",
+    "account": "Account",
+    "privacy": "Privacy",
+    "languageOptions": {
+      "english": "English",
+      "russian": "Russian",
+      "kazakh": "Kazakh"
+    },
+    "themeOptions": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "errors": {
+    "networkError": "Network error. Please check your connection.",
+    "serverError": "Server error. Please try again later.",
+    "invalidFile": "Invalid file format. Please upload a valid ECG file.",
+    "fileTooLarge": "File too large. Maximum size is 10MB.",
+    "authenticationError": "Authentication failed. Please sign in again.",
+    "unauthorized": "You don't have permission to access this resource.",
+    "notFound": "The requested resource was not found.",
+    "validationError": "Please check your input and try again.",
+    "analysisFailed": "Analysis failed. Please try again with a different file.",
+    "saveFailed": "Failed to save. Please try again.",
+    "deleteFailed": "Failed to delete. Please try again."
+  },
+  "success": {
+    "loginSuccess": "Successfully signed in!",
+    "registerSuccess": "Account created successfully!",
+    "logoutSuccess": "Successfully signed out!",
+    "saveSuccess": "Changes saved successfully!",
+    "deleteSuccess": "Record deleted successfully!",
+    "analysisSuccess": "ECG analysis completed successfully!"
+  },
+  "diagnosis": {
+    "NORM": {
+      "name": "Normal",
+      "description": "Normal heart rhythm and electrical activity"
+    },
+    "MI": {
+      "name": "Myocardial Infarction",
+      "description": "Heart attack - damage to heart muscle"
+    },
+    "STTC": {
+      "name": "Ischemia",
+      "description": "Reduced blood flow to heart muscle"
+    },
+    "CD": {
+      "name": "Conduction Disorder",
+      "description": "Abnormal electrical conduction in the heart"
+    },
+    "HYP": {
+      "name": "Hypertrophy",
+      "description": "Enlargement of heart chambers"
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} ECG Analysis System. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contact": "Contact Us"
+  }
+}
