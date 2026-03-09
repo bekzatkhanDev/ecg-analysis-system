@@ -36,7 +36,7 @@ function AppShell({ children }: AppShellProps) {
           </div>
           <div className="flex items-center gap-3">
             <div className="rounded-lg border border-medical-200 bg-medical-50 px-3 py-2 text-sm text-medical-800">
-              {user?.email ?? "Unknown user"}
+              {user?.email ?? t('common.unknownUser')}
             </div>
             <LanguageSwitcher />
             <button type="button" onClick={handleLogout} className="btn-secondary">

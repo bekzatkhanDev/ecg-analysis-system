@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 import { useAnalysisStore } from "../store/analysisStore";
 
 function AnalysisDashboard() {
@@ -23,15 +24,17 @@ function AnalysisDashboard() {
         .sort((a, b) => b.probability - a.probability)
     : [];
 
+  const { t } = useTranslation();
+  
   return (
     <section className="panel animate-fade-up p-4">
-      <h2 className="mb-1 text-lg font-semibold text-medical-900">Analysis Dashboard</h2>
-      <p className="mb-4 text-xs text-medical-700">Class probabilities from model inference.</p>
+      <h2 className="mb-1 text-lg font-semibold text-medical-900">{t('dashboard.analysisDashboard')}</h2>
+      <p className="mb-4 text-xs text-medical-700">{t('dashboard.classProbabilities')}</p>
 
       {probabilities ? (
         <>
           <div className="mb-3 rounded-lg border border-medical-200 bg-medical-50 px-3 py-2">
-            <p className="text-xs uppercase tracking-[0.2em] text-medical-600">Predicted class</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-medical-600">{t('dashboard.predictedClass')}</p>
             <p className="text-xl font-semibold text-accent-700">{predictedClass}</p>
           </div>
           <div className="h-72 w-full">
@@ -81,7 +84,7 @@ function AnalysisDashboard() {
         </>
       ) : (
         <div className="rounded-lg border border-dashed border-medical-300 bg-medical-50 px-3 py-8 text-center text-sm text-medical-700">
-          Upload an ECG and run analysis to see class probabilities.
+          {t('dashboard.uploadECG')}
         </div>
       )}
     </section>

@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Line } from "react-chartjs-2";
 import { ECG_LEADS, type ECGMatrix } from "../types/ecg";
 
@@ -165,6 +166,7 @@ interface ECGLeadChartProps {
 }
 
 function ECGLeadChart({ leadData, leadName, leadIndex, sampleRate = 500, onZoomChange }: ECGLeadChartProps) {
+  const { t } = useTranslation();
   const chartRef = useRef<ChartJS<"line"> | null>(null);
   const [xRange, setXRange] = useState<{ min?: number; max?: number }>({});
 
@@ -222,15 +224,16 @@ function ECGLeadChart({ leadData, leadName, leadIndex, sampleRate = 500, onZoomC
         x: {
           type: "linear",
           min: xRange.min ?? 0,
-          max: xRange.max ?? durationSec,
           ticks: {
-            color: "#32557a",
-            maxTicksLimit: 10,
-            callback: (value) => `${Number(value).toFixed(2)} s`,
+            display: true,
+            color: "#2c4865",
+            font: {
+              weight: "bold",
+            },
           },
           title: {
             display: true,
-            text: "Time",
+            text: t('ecg.chart.time'),
             color: "#2c4865",
             font: {
               weight: "bold",
@@ -332,9 +335,9 @@ function ECGLeadChart({ leadData, leadName, leadIndex, sampleRate = 500, onZoomC
   return (
     <div className="panel animate-fade-up p-3">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-medical-900">{leadName}</h3>
+        <h3 className="text-sm font-semibold text-medical-900">{t('ecg.chart.lead', { leadNumber: leadIndex + 1 })}</h3>
         <button type="button" className="btn-secondary text-xs" onClick={handleResetZoom}>
-          Reset Zoom
+          {t('ecg.chart.resetZoom')}
         </button>
       </div>
       <div className="h-[200px] w-full rounded-lg border border-medical-200 bg-white">
@@ -350,16 +353,18 @@ interface ECGChartProps {
 }
 
 function ECGChart({ data, sampleRate = 500 }: ECGChartProps) {
+  const { t } = useTranslation();
+  
   // Early return validation - must be before any hooks
   if (!data) {
     return (
       <section className="panel animate-fade-up p-4">
-        <h2 className="mb-1 text-lg font-semibold text-medical-900">ECG Charts (12 Leads)</h2>
+        <h2 className="mb-1 text-lg font-semibold text-medical-900">{t('dashboard.ecgCharts')}</h2>
         <p className="mb-4 text-xs text-medical-700">
-          Each lead displayed in its own chart for detailed analysis.
+          {t('dashboard.individualCharts')}
         </p>
         <div className="rounded-lg border border-dashed border-medical-300 bg-medical-50 px-3 py-16 text-center text-sm text-medical-700">
-          No ECG signal loaded. Upload a file to visualize all 12 leads.
+          {t('dashboard.noECGSignal')}
         </div>
       </section>
     );
@@ -369,12 +374,12 @@ function ECGChart({ data, sampleRate = 500 }: ECGChartProps) {
   if (!Array.isArray(data) || data.length !== 12) {
     return (
       <section className="panel animate-fade-up p-4">
-        <h2 className="mb-1 text-lg font-semibold text-medical-900">ECG Charts (12 Leads)</h2>
+        <h2 className="mb-1 text-lg font-semibold text-medical-900">{t('dashboard.ecgCharts')}</h2>
         <p className="mb-4 text-xs text-medical-700">
-          Invalid ECG data format. Expected 12 leads with 5000 samples each.
+          {t('dashboard.invalidECGFormat')}
         </p>
         <div className="rounded-lg border border-dashed border-medical-300 bg-medical-50 px-3 py-16 text-center text-sm text-medical-700">
-          Please upload a valid ECG file.
+          {t('dashboard.pleaseUploadValid')}
         </div>
       </section>
     );
@@ -387,12 +392,12 @@ function ECGChart({ data, sampleRate = 500 }: ECGChartProps) {
   if (!allLeadsValid) {
     return (
       <section className="panel animate-fade-up p-4">
-        <h2 className="mb-1 text-lg font-semibold text-medical-900">ECG Charts (12 Leads)</h2>
+        <h2 className="mb-1 text-lg font-semibold text-medical-900">{t('dashboard.ecgCharts')}</h2>
         <p className="mb-4 text-xs text-medical-700">
-          Invalid ECG data format. All leads must have the same number of samples.
+          {t('dashboard.invalidECGData')}
         </p>
         <div className="rounded-lg border border-dashed border-medical-300 bg-medical-50 px-3 py-16 text-center text-sm text-medical-700">
-          Please upload a valid ECG file.
+          {t('dashboard.pleaseUploadValid')}
         </div>
       </section>
     );
@@ -405,9 +410,9 @@ function ECGChart({ data, sampleRate = 500 }: ECGChartProps) {
   return (
     <section className="panel animate-fade-up p-4">
       <div className="mb-3">
-        <h2 className="text-lg font-semibold text-medical-900">ECG Charts (12 Leads)</h2>
+        <h2 className="text-lg font-semibold text-medical-900">{t('dashboard.ecgCharts')}</h2>
         <p className="text-xs text-medical-700">
-          Each lead has its own dedicated chart for detailed analysis. Zoom and pan individually.
+          {t('dashboard.detailedAnalysis')}
         </p>
       </div>
 

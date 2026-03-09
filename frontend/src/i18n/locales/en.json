@@ -23,7 +23,13 @@
     "details": "Details",
     "settings": "Settings",
     "help": "Help",
-    "about": "About"
+    "about": "About",
+    "pleaseWait": "Please wait...",
+    "createAccount": "Create account",
+    "signingIn": "Signing in...",
+    "signingUp": "Signing up...",
+    "validatingSession": "Validating session...",
+    "unknownUser": "Unknown user"
   },
   "auth": {
     "login": {
@@ -36,7 +42,8 @@
       "signUp": "Sign Up",
       "forgotPassword": "Forgot your password?",
       "noAccount": "Don't have an account?",
-      "haveAccount": "Already have an account?"
+      "haveAccount": "Already have an account?",
+      "pleaseWait": "Please wait..."
     },
     "register": {
       "title": "Sign Up",
@@ -48,7 +55,9 @@
       "signUp": "Sign Up",
       "signIn": "Sign In",
       "agreeToTerms": "I agree to the Terms of Service and Privacy Policy",
-      "termsAndPrivacy": "Terms of Service and Privacy Policy"
+      "termsAndPrivacy": "Terms of Service and Privacy Policy",
+      "userRegistered": "User registered",
+      "loggingIn": "Logging in..."
     },
     "logout": "Logout",
     "profile": "Profile"
@@ -74,7 +83,13 @@
       "uploading": "Uploading...",
       "analyzing": "Analyzing...",
       "fileSelected": "File selected: {{fileName}}",
-      "noFileSelected": "No file selected"
+      "noFileSelected": "No file selected",
+      "startAnalysis": "Start analysis",
+      "analyzingECG": "Analyzing ECG...",
+      "uploadComplete": "Upload complete",
+      "uploadingAndAnalyzing": "Uploading and analyzing...",
+      "uploadedSuccessfully": "Uploaded successfully!",
+      "errorUploading": "Error uploading"
     },
     "chart": {
       "title": "ECG Signal Visualization",
@@ -85,7 +100,9 @@
       "zoomOut": "Zoom Out",
       "resetZoom": "Reset Zoom",
       "pan": "Pan",
-      "selectLead": "Select Lead"
+      "selectLead": "Select Lead",
+      "leadLabels": "Lead labels",
+      "ecgPaper": "ECG paper"
     },
     "results": {
       "title": "Analysis Results",
@@ -114,7 +131,23 @@
     "abnormal": "Abnormal",
     "recentAnalysis": "Recent Analysis",
     "noRecentAnalysis": "No recent analysis found",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "analysisDashboard": "Analysis dashboard",
+    "classProbabilities": "Class probabilities",
+    "predictedClass": "Predicted class",
+    "analysisResults": "Analysis results",
+    "ecgCharts": "ECG charts",
+    "twelveLeads": "12 leads",
+    "detailedAnalysis": "Detailed analysis",
+    "individualCharts": "Individual charts",
+    "zoomAndPan": "Zoom and pan",
+    "noECGSignal": "No ECG signal",
+    "noECGData": "No ECG data",
+    "invalidECGFormat": "Invalid ECG format",
+    "invalidECGData": "Invalid ECG data",
+    "expectedLeads": "Expected 12 leads with 5000 samples",
+    "sameSamples": "All leads should have the same number of samples",
+    "pleaseUploadValid": "Please upload a valid ECG file"
   },
   "history": {
     "title": "Analysis History",
@@ -133,7 +166,11 @@
     },
     "noRecords": "No analysis records found",
     "deleteConfirmation": "Are you sure you want to delete this record?",
-    "deleteSuccess": "Record deleted successfully"
+    "deleteSuccess": "Record deleted successfully",
+    "analysisHistory": "Analysis history",
+    "previousResults": "Previous results",
+    "viewPrevious": "View previous",
+    "noAnalysisRecords": "No analysis records found"
   },
   "settings": {
     "title": "Settings",
@@ -164,7 +201,13 @@
     "validationError": "Please check your input and try again.",
     "analysisFailed": "Analysis failed. Please try again with a different file.",
     "saveFailed": "Failed to save. Please try again.",
-    "deleteFailed": "Failed to delete. Please try again."
+    "deleteFailed": "Failed to delete. Please try again.",
+    "invalidJSON": "Invalid JSON format",
+    "unsupportedFormat": "Unsupported file format",
+    "emptyFile": "File is empty",
+    "failedToProcess": "Failed to process file",
+    "failedToSave": "Failed to save",
+    "failedToDelete": "Failed to delete"
   },
   "success": {
     "loginSuccess": "Successfully signed in!",
@@ -172,7 +215,9 @@
     "logoutSuccess": "Successfully signed out!",
     "saveSuccess": "Changes saved successfully!",
     "deleteSuccess": "Record deleted successfully!",
-    "analysisSuccess": "ECG analysis completed successfully!"
+    "analysisSuccess": "ECG analysis completed successfully!",
+    "userRegistered": "User registered",
+    "loggingIn": "Logging in..."
   },
   "diagnosis": {
     "NORM": {

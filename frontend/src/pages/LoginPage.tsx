@@ -161,10 +161,10 @@ function LoginPage() {
 
           <button type="submit" className="btn-primary w-full" disabled={isSubmitting}>
             {isSubmitting
-              ? "Please wait..."
+              ? t('common.pleaseWait')
               : mode === "login"
-                ? "Sign In"
-                : "Create Account"}
+                ? t('auth.login.signIn')
+                : t('common.createAccount')}
           </button>
         </form>
       </div>

@@ -23,7 +23,13 @@
     "details": "Детали",
     "settings": "Настройки",
     "help": "Помощь",
-    "about": "О программе"
+    "about": "О программе",
+    "pleaseWait": "Пожалуйста, подождите...",
+    "createAccount": "Создать аккаунт",
+    "signingIn": "Вход в систему...",
+    "signingUp": "Регистрация...",
+    "validatingSession": "Проверка сессии...",
+    "unknownUser": "Неизвестный пользователь"
   },
   "auth": {
     "login": {
@@ -74,7 +80,13 @@
       "uploading": "Загрузка...",
       "analyzing": "Анализ...",
       "fileSelected": "Выбран файл: {{fileName}}",
-      "noFileSelected": "Файл не выбран"
+      "noFileSelected": "Файл не выбран",
+      "startAnalysis": "Начать анализ",
+      "analyzingECG": "Анализ ЭКГ...",
+      "uploadComplete": "Загрузка завершена",
+      "uploadingAndAnalyzing": "Загрузка и анализ...",
+      "uploadedSuccessfully": "Загружено успешно!",
+      "errorUploading": "Ошибка загрузки"
     },
     "chart": {
       "title": "Визуализация сигнала ЭКГ",
@@ -85,7 +97,9 @@
       "zoomOut": "Уменьшить",
       "resetZoom": "Сбросить масштаб",
       "pan": "Панорамирование",
-      "selectLead": "Выбрать отведение"
+      "selectLead": "Выбрать отведение",
+      "leadLabels": "Метки отведений",
+      "ecgPaper": "ЭКГ бумага"
     },
     "results": {
       "title": "Результаты анализа",
@@ -114,7 +128,23 @@
     "abnormal": "Патология",
     "recentAnalysis": "Последние анализы",
     "noRecentAnalysis": "Нет недавних анализов",
-    "viewAll": "Просмотреть все"
+    "viewAll": "Просмотреть все",
+    "analysisDashboard": "Панель анализа",
+    "classProbabilities": "Вероятности классов",
+    "predictedClass": "Предсказанный класс",
+    "analysisResults": "Результаты анализа",
+    "ecgCharts": "Графики ЭКГ",
+    "twelveLeads": "12 отведений",
+    "detailedAnalysis": "Детальный анализ",
+    "individualCharts": "Индивидуальные графики",
+    "zoomAndPan": "Масштабирование и панорамирование",
+    "noECGSignal": "Нет сигнала ЭКГ",
+    "noECGData": "Нет данных ЭКГ",
+    "invalidECGFormat": "Неверный формат ЭКГ",
+    "invalidECGData": "Неверные данные ЭКГ",
+    "expectedLeads": "Ожидается 12 отведений по 5000 образцов",
+    "sameSamples": "Все отведения должны иметь одинаковое количество образцов",
+    "pleaseUploadValid": "Пожалуйста, загрузите корректный файл ЭКГ"
   },
   "history": {
     "title": "История анализов",
@@ -133,7 +163,11 @@
     },
     "noRecords": "Записи анализов не найдены",
     "deleteConfirmation": "Вы уверены, что хотите удалить эту запись?",
-    "deleteSuccess": "Запись успешно удалена"
+    "deleteSuccess": "Запись успешно удалена",
+    "analysisHistory": "История анализов",
+    "previousResults": "Предыдущие результаты",
+    "viewPrevious": "Просмотр предыдущих",
+    "noAnalysisRecords": "Записи анализов не найдены"
   },
   "settings": {
     "title": "Настройки",
@@ -164,7 +198,13 @@
     "validationError": "Пожалуйста, проверьте введенные данные и попробуйте снова.",
     "analysisFailed": "Анализ не удался. Пожалуйста, попробуйте с другим файлом.",
     "saveFailed": "Не удалось сохранить. Пожалуйста, попробуйте снова.",
-    "deleteFailed": "Не удалось удалить. Пожалуйста, попробуйте снова."
+    "deleteFailed": "Не удалось удалить. Пожалуйста, попробуйте снова.",
+    "invalidJSON": "Неверный формат JSON",
+    "unsupportedFormat": "Неподдерживаемый формат файла",
+    "emptyFile": "Файл пуст",
+    "failedToProcess": "Не удалось обработать файл",
+    "failedToSave": "Не удалось сохранить",
+    "failedToDelete": "Не удалось удалить"
   },
   "success": {
     "loginSuccess": "Успешный вход в систему!",
@@ -172,7 +212,9 @@
     "logoutSuccess": "Успешный выход из системы!",
     "saveSuccess": "Изменения успешно сохранены!",
     "deleteSuccess": "Запись успешно удалена!",
-    "analysisSuccess": "Анализ ЭКГ успешно завершен!"
+    "analysisSuccess": "Анализ ЭКГ успешно завершен!",
+    "userRegistered": "Пользователь зарегистрирован",
+    "loggingIn": "Вход в систему..."
   },
   "diagnosis": {
     "NORM": {

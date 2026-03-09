@@ -1,4 +1,5 @@
 import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useAnalyzeMutation } from "../api/hooks";
 import { useAnalysisStore } from "../store/analysisStore";
 
@@ -206,11 +207,13 @@ function ECGUpload() {
 
   const progressVisible = isAnalyzing || uploadProgress > 0;
 
+  const { t } = useTranslation();
+  
   return (
     <section className="panel animate-fade-up p-4">
-      <h2 className="mb-1 text-lg font-semibold text-medical-900">ECG Upload</h2>
+      <h2 className="mb-1 text-lg font-semibold text-medical-900">{t('ecg.upload.title')}</h2>
       <p className="mb-4 text-xs text-medical-700">
-        Accepted formats: JSON, CSV, TXT, DAT. Required signal shape: 12x5000.
+        {t('ecg.upload.subtitle')}
       </p>
 
       <div className="space-y-3">
@@ -225,7 +228,7 @@ function ECGUpload() {
 
         {fileName ? (
           <div className="rounded-lg border border-medical-200 bg-medical-50 px-3 py-2 text-sm text-medical-800">
-            Loaded file: <span className="font-semibold">{fileName}</span>
+            {t('ecg.upload.fileSelected', { fileName })}
           </div>
         ) : null}
 
@@ -244,7 +247,7 @@ function ECGUpload() {
         {progressVisible ? (
           <div>
             <div className="mb-1 flex items-center justify-between text-xs text-medical-700">
-              <span>{isAnalyzing ? "Uploading and analyzing..." : "Upload complete"}</span>
+              <span>{isAnalyzing ? t('ecg.upload.uploadingAndAnalyzing') : t('ecg.upload.uploadComplete')}</span>
               <span>{uploadProgress}%</span>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-medical-100">
@@ -269,7 +272,7 @@ function ECGUpload() {
         {/* Success */}
         {status === "success" && response && (
           <div className="rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-sm text-green-700">
-            ✅ Загружено успешно!
+            ✅ {t('ecg.upload.uploadedSuccessfully')}
             <br />
             <small>{response.url}</small>
           </div>
@@ -278,7 +281,7 @@ function ECGUpload() {
         {/* Error */}
         {status === "error" && (
           <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
-            ❌ Ошибка: {errorMsg}
+            ❌ {t('ecg.upload.errorUploading')}: {errorMsg}
           </div>
         )}
 
@@ -289,7 +292,7 @@ function ECGUpload() {
             onClick={handleAnalyze}
             disabled={!rawData || isParsing || isAnalyzing}
           >
-            {isAnalyzing ? "Analyzing..." : "Start Analysis"}
+            {isAnalyzing ? t('ecg.upload.analyzing') : t('ecg.upload.startAnalysis')}
           </button>
           <button
             type="button"
@@ -297,7 +300,7 @@ function ECGUpload() {
             onClick={handleReset}
             disabled={!rawData || isAnalyzing}
           >
-            Reset Session
+            {t('common.reset')}
           </button>
         </div>
       </div>

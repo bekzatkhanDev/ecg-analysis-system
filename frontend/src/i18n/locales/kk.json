@@ -23,7 +23,13 @@
     "details": "Толығырақ",
     "settings": "Баптаулар",
     "help": "Көмек",
-    "about": "Туралы"
+    "about": "Туралы",
+    "pleaseWait": "Сабір қылыңыз...",
+    "createAccount": "Аккаунт құру",
+    "signingIn": "Кіру...",
+    "signingUp": "Тіркелу...",
+    "validatingSession": "Сессияны тексеру...",
+    "unknownUser": "Белгісіз пайдаланушы"
   },
   "auth": {
     "login": {
@@ -36,7 +42,8 @@
       "signUp": "Тіркелу",
       "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
       "noAccount": "Аккаунт жоқ па?",
-      "haveAccount": "Аккаунт бар ма?"
+      "haveAccount": "Аккаунт бар ма?",
+      "pleaseWait": "Сабір қылыңыз..."
     },
     "register": {
       "title": "Тіркелу",
@@ -48,7 +55,9 @@
       "signUp": "Тіркелу",
       "signIn": "Кіру",
       "agreeToTerms": "Мен Қызмет көрсету шарттары мен Құпиялылық саясатымен келісемін",
-      "termsAndPrivacy": "Қызмет көрсету шарттары мен Құпиялылық саясаты"
+      "termsAndPrivacy": "Қызмет көрсету шарттары мен Құпиялылық саясаты",
+      "userRegistered": "Пайдаланушы тіркелді",
+      "loggingIn": "Кіру..."
     },
     "logout": "Шығу",
     "profile": "Профиль"
@@ -74,7 +83,13 @@
       "uploading": "Жүктелуде...",
       "analyzing": "Талдануда...",
       "fileSelected": "Таңдалған файл: {{fileName}}",
-      "noFileSelected": "Файл таңдалмады"
+      "noFileSelected": "Файл таңдалмады",
+      "startAnalysis": "Талдауды бастау",
+      "analyzingECG": "ЭКГ-ті талдау...",
+      "uploadComplete": "Жүктеу аяқталды",
+      "uploadingAndAnalyzing": "Жүктеу және талдау...",
+      "uploadedSuccessfully": "Сәтті жүктелді!",
+      "errorUploading": "Жүктеу қатесі"
     },
     "chart": {
       "title": "ЭКГ сигналының визуализациясы",
@@ -85,7 +100,9 @@
       "zoomOut": "Кішірейту",
       "resetZoom": "Масштабты тастау",
       "pan": "Жылжыту",
-      "selectLead": "Жетекшіні таңдау"
+      "selectLead": "Жетекшіні таңдау",
+      "leadLabels": "Жетекшілердің белгілері",
+      "ecgPaper": "ЭКГ қағазы"
     },
     "results": {
       "title": "Талдау нәтижелері",
@@ -114,7 +131,23 @@
     "abnormal": "Патология",
     "recentAnalysis": "Соңғы талдаулар",
     "noRecentAnalysis": "Жақындағы талдаулар жоқ",
-    "viewAll": "Барлығын қарау"
+    "viewAll": "Барлығын қарау",
+    "analysisDashboard": "Талдау панелі",
+    "classProbabilities": "Класс ықтималдықтары",
+    "predictedClass": "Болжанған класс",
+    "analysisResults": "Талдау нәтижелері",
+    "ecgCharts": "ЭКГ графиктері",
+    "twelveLeads": "12 жетекші",
+    "detailedAnalysis": "Деталды талдау",
+    "individualCharts": "Жеке графиктер",
+    "zoomAndPan": "Ұлғайту және жылжыту",
+    "noECGSignal": "ЭКГ сигналы жоқ",
+    "noECGData": "ЭКГ деректері жоқ",
+    "invalidECGFormat": "Қате ЭКГ пішімі",
+    "invalidECGData": "Қате ЭКГ деректері",
+    "expectedLeads": "12 жетекші мен 5000 үлгі күтілуде",
+    "sameSamples": "Барлық жетекшілерде бірдей үлгі саны болуы керек",
+    "pleaseUploadValid": "Өтініш, дұрыс ЭКГ файлын жүктеңіз"
   },
   "history": {
     "title": "Талдау тарихы",
@@ -133,7 +166,11 @@
     },
     "noRecords": "Талдау жазбалары табылмады",
     "deleteConfirmation": "Бұл жазбаны жоюға сенімдісіз бе?",
-    "deleteSuccess": "Жазба сәтті жойылды"
+    "deleteSuccess": "Жазба сәтті жойылды",
+    "analysisHistory": "Талдау тарихы",
+    "previousResults": "Өткен нәтижелер",
+    "viewPrevious": "Өткендерді қарау",
+    "noAnalysisRecords": "Талдау жазбалары табылмады"
   },
   "settings": {
     "title": "Баптаулар",
@@ -164,7 +201,13 @@
     "validationError": "Өтініш, енгізілген деректерді тексеріп, қайтадан көріңіз.",
     "analysisFailed": "Талдау сәтсіз аяқталды. Басқа файлмен қайтадан көріңіз.",
     "saveFailed": "Сақтау сәтсіз аяқталды. Қайтадан көріңіз.",
-    "deleteFailed": "Жою сәтсіз аяқталды. Қайтадан көріңіз."
+    "deleteFailed": "Жою сәтсіз аяқталды. Қайтадан көріңіз.",
+    "invalidJSON": "Қате JSON пішімі",
+    "unsupportedFormat": "Қолдауы жоқ файл пішімі",
+    "emptyFile": "Файл бос",
+    "failedToProcess": "Файлды өңдеу сәтсіз аяқталды",
+    "failedToSave": "Сақтау сәтсіз аяқталды",
+    "failedToDelete": "Жою сәтсіз аяқталды"
   },
   "success": {
     "loginSuccess": "Сәтті кірілді!",
@@ -172,7 +215,9 @@
     "logoutSuccess": "Сәтті шығылды!",
     "saveSuccess": "Өзгерістер сәтті сақталды!",
     "deleteSuccess": "Жазба сәтті жойылды!",
-    "analysisSuccess": "ЭКГ талдауы сәтті аяқталды!"
+    "analysisSuccess": "ЭКГ талдауы сәтті аяқталды!",
+    "userRegistered": "Пайдаланушы тіркелді",
+    "loggingIn": "Кіру..."
   },
   "diagnosis": {
     "NORM": {
