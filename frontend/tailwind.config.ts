@@ -5,26 +5,26 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["IBM Plex Sans", "Segoe UI", "Tahoma", "sans-serif"],
+        sans: ["Inter", "Segoe UI", "Tahoma", "sans-serif"],
         mono: ["IBM Plex Mono", "Consolas", "monospace"],
       },
       colors: {
         medical: {
-          50: "#f6f9fc",
-          100: "#ecf2f8",
-          200: "#d7e3ef",
-          300: "#b2c9de",
-          400: "#86a7c8",
-          500: "#5e86af",
-          600: "#426b95",
-          700: "#32557a",
-          800: "#2c4865",
-          900: "#263d53",
+          50: "#f0f7f7",
+          100: "#e0f0f0",
+          200: "#b3d9d9",
+          300: "#80c2c2",
+          400: "#4daaaa",
+          500: "#008080",
+          600: "#006666",
+          700: "#004d4d",
+          800: "#003333",
+          900: "#001a1a",
         },
         accent: {
-          500: "#0057b8",
-          600: "#004a9c",
-          700: "#003e82",
+          500: "#008080",
+          600: "#006666",
+          700: "#004d4d",
         },
       },
       boxShadow: {
