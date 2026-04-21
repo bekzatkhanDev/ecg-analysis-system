@@ -1,0 +1,21 @@
+# Dependencies (reinstalled inside Docker)
+node_modules/
+
+# Previous build output
+dist/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# TypeScript incremental build cache
+*.tsbuildinfo

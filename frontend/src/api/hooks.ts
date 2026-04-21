@@ -5,8 +5,12 @@ import { useAnalysisStore } from "../store/analysisStore";
 import { useAuthStore } from "../store/authStore";
 import { getMe, login, register } from "./auth";
 import { analyzeECG, type AnalyzeVariables } from "./ecg";
+import { getRecords, getRecord, updateDiagnosis, getPatients } from "./records";
+import type { DiagnosisPayload } from "../types/api";
 
 const ME_QUERY_KEY = ["auth", "me"] as const;
+const RECORDS_QUERY_KEY = ["ecg", "records"] as const;
+const PATIENTS_QUERY_KEY = ["ecg", "patients"] as const;
 
 export function useMeQuery() {
   const token = useAuthStore((state) => state.token);
@@ -56,6 +60,7 @@ export function useAnalyzeMutation() {
   const setResult = useAnalysisStore((state) => state.setResult);
   const setECGData = useAnalysisStore((state) => state.setECGData);
   const setError = useAnalysisStore((state) => state.setError);
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (variables: AnalyzeVariables) => analyzeECG(variables),
@@ -65,15 +70,61 @@ export function useAnalyzeMutation() {
       setError(null);
     },
     onSuccess: (result) => {
-      setResult(result.probabilities, result.predicted_class);
+      setResult(result.probabilities, result.predicted_class, result.record_id);
       setECGData(result.ecg_data);
       setUploadProgress(100);
+      // Refresh the records list so it shows the new entry
+      queryClient.invalidateQueries({ queryKey: RECORDS_QUERY_KEY });
     },
     onError: (error) => {
       setError(getApiErrorMessage(error));
     },
     onSettled: () => {
       setAnalyzing(false);
+    },
+  });
+}
+
+export function useRecordsQuery() {
+  const token = useAuthStore((state) => state.token);
+  return useQuery({
+    queryKey: RECORDS_QUERY_KEY,
+    queryFn: getRecords,
+    enabled: Boolean(token),
+    staleTime: 30_000,
+  });
+}
+
+export function useRecordQuery(id: number | null) {
+  return useQuery({
+    queryKey: ["ecg", "record", id],
+    queryFn: () => getRecord(id!),
+    enabled: id != null,
+    staleTime: 30_000,
+  });
+}
+
+export function usePatientsQuery() {
+  const user = useAuthStore((state) => state.user);
+  return useQuery({
+    queryKey: PATIENTS_QUERY_KEY,
+    queryFn: getPatients,
+    enabled: user?.role === "doctor",
+    staleTime: 60_000,
+  });
+}
+
+export function useDiagnosisMutation() {
+  const queryClient = useQueryClient();
+  const setDoctorDiagnosis = useAnalysisStore((state) => state.setDoctorDiagnosis);
+
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: number; payload: DiagnosisPayload }) =>
+      updateDiagnosis(id, payload),
+    onSuccess: (result) => {
+      setDoctorDiagnosis(result.doctor_diagnosis, result.doctor_comment);
+      queryClient.invalidateQueries({ queryKey: RECORDS_QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: ["ecg", "record", result.id] });
     },
   });
 }

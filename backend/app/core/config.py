@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     # DB
     database_url: str = "sqlite:///./ecg_analysis.db"
 
+    # CORS — comma-separated list of allowed origins
+    cors_origins: str = "http://localhost:5173,http://localhost:80,http://localhost"
+
     # ML model
     model_weights_path: str = "best_model_500hz.pth"
     model_num_classes: int = 5

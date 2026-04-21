@@ -7,6 +7,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect, text
 
 from app.api.endpoints import auth, ecg, users
 from app.core.config import settings
@@ -16,6 +17,14 @@ from app.services.ml_service import ModelService
 
 # Create tables when app module loads (so DB is ready before first request)
 Base.metadata.create_all(bind=engine)
+
+# Auto-migrate: add 'role' column to users table if it doesn't exist yet
+with engine.connect() as conn:
+    inspector = inspect(engine)
+    existing_cols = {col["name"] for col in inspector.get_columns("users")}
+    if "role" not in existing_cols:
+        conn.execute(text("ALTER TABLE users ADD COLUMN role VARCHAR(32) NOT NULL DEFAULT 'doctor'"))
+        conn.commit()
 
 
 @asynccontextmanager
@@ -41,7 +50,7 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[o.strip() for o in settings.cors_origins.split(",")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

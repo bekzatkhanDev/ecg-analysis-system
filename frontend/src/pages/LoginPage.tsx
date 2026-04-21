@@ -14,6 +14,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState<"doctor" | "patient">("doctor");
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   const loginMutation = useLoginMutation();
@@ -51,6 +52,7 @@ function LoginPage() {
         email,
         password,
         full_name: fullName.trim() || undefined,
+        role,
       },
       {
         onSuccess: () => {
@@ -104,18 +106,51 @@ function LoginPage() {
 
         <form className="space-y-3" onSubmit={submit}>
           {mode === "register" ? (
-            <div>
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-medical-700">
-                {t('auth.register.fullName')}
-              </label>
-              <input
-                type="text"
-                className="input-field"
-                value={fullName}
-                onChange={(event) => setFullName(event.target.value)}
-                placeholder="Dr. Name"
-              />
-            </div>
+            <>
+              <div>
+                <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-medical-700">
+                  {t('auth.register.fullName')}
+                </label>
+                <input
+                  type="text"
+                  className="input-field"
+                  value={fullName}
+                  onChange={(event) => setFullName(event.target.value)}
+                  placeholder="Dr. Name"
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-medical-700">
+                  {t('auth.register.role')}
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setRole("doctor")}
+                    className={`rounded-lg border-2 px-3 py-3 text-sm font-semibold transition ${
+                      role === "doctor"
+                        ? "border-accent-600 bg-accent-50 text-accent-700"
+                        : "border-medical-200 bg-white text-medical-700 hover:border-medical-300"
+                    }`}
+                  >
+                    <div className="text-lg mb-0.5">🩺</div>
+                    {t('auth.register.roleDoctor')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole("patient")}
+                    className={`rounded-lg border-2 px-3 py-3 text-sm font-semibold transition ${
+                      role === "patient"
+                        ? "border-accent-600 bg-accent-50 text-accent-700"
+                        : "border-medical-200 bg-white text-medical-700 hover:border-medical-300"
+                    }`}
+                  >
+                    <div className="text-lg mb-0.5">🧑</div>
+                    {t('auth.register.rolePatient')}
+                  </button>
+                </div>
+              </div>
+            </>
           ) : null}
 
           <div>

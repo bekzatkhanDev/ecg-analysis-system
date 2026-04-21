@@ -14,6 +14,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
     full_name = Column(String(255), nullable=True)
+    role = Column(String(32), nullable=True, default="doctor", server_default="doctor")
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -63,3 +64,26 @@ class AnalysisResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     ecg_record = relationship("ECGRecord", back_populates="analysis_results")
+
+
+class Record(Base):
+    """Persisted ECG analysis record linking doctor, patient, ML results, and doctor's diagnosis."""
+
+    __tablename__ = "records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    doctor_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    patient_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    predicted_class = Column(String(32), nullable=False)
+    prob_norm = Column(Float, nullable=False)
+    prob_mi = Column(Float, nullable=False)
+    prob_sttc = Column(Float, nullable=False)
+    prob_cd = Column(Float, nullable=False)
+    prob_hyp = Column(Float, nullable=False)
+    # Doctor's manual assessment (filled after review)
+    doctor_diagnosis = Column(String(100), nullable=True)
+    doctor_comment = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    doctor = relationship("User", foreign_keys=[doctor_id])
+    patient = relationship("User", foreign_keys=[patient_id])

@@ -1,0 +1,189 @@
+@startuml EKG_Talday_Zhuyesi_Arxitekturasy
+
+' ── Жалпы стиль ─────────────────────────────────────────────────────────────
+skinparam defaultFontName      "Segoe UI"
+skinparam defaultFontSize      12
+skinparam defaultTextAlignment center
+skinparam wrapWidth            160
+
+skinparam backgroundColor      #F8FAFC
+skinparam shadowing            false
+skinparam roundCorner          8
+
+skinparam ArrowColor           #475569
+skinparam ArrowThickness       1.4
+skinparam ArrowFontColor       #64748B
+skinparam ArrowFontSize        10
+
+' ── Пакет (қабат шегі) ──────────────────────────────────────────────────────
+skinparam package {
+    BackgroundColor  transparent
+    BorderColor      #CBD5E1
+    BorderThickness  1.5
+    FontColor        #334155
+    FontStyle        bold
+    FontSize         13
+}
+
+' ── Компонент ────────────────────────────────────────────────────────────────
+skinparam component {
+    BackgroundColor  #EFF6FF
+    BorderColor      #93C5FD
+    FontColor        #1E3A5F
+    BorderThickness  1.2
+}
+
+' ── Дерекқор ─────────────────────────────────────────────────────────────────
+skinparam database {
+    BackgroundColor  #FEF9C3
+    BorderColor      #F59E0B
+    FontColor        #78350F
+    BorderThickness  1.5
+}
+
+' ── Ескерту ──────────────────────────────────────────────────────────────────
+skinparam note {
+    BackgroundColor  #F1F5F9
+    BorderColor      #94A3B8
+    FontColor        #475569
+    FontSize         10
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  0-ҚАБАТ — ИНТЕРФЕЙС (ФРОНТЕНД)
+' ═══════════════════════════════════════════════════════════════════════════
+package "Шолғыш  /  Интерфейс" <<Rectangle>> {
+
+    package "Беттер" {
+        [Кіру беті\n/login]          as LP  #DBEAFE
+        [Басты бет\n/]               as DP  #DBEAFE
+        [Жазбалар беті\n/records]    as RP  #DBEAFE
+    }
+
+    package "Интерфейс компоненттері" {
+        [ЭКГ жүктеу\n+ Пациент таңдауы]            as EU  #DBEAFE
+        [ЭКГ графигі\nChart.js · 12 жетекші]        as EC  #DBEAFE
+        [Талдау панелі\nRecharts · PDF экспорты]     as AD  #DBEAFE
+        [Диагноз формасы]                            as DF  #DBEAFE
+        [Қолданба қаңқасы · Навигация]              as SH  #DBEAFE
+    }
+
+    package "Күй басқаруы  (Zustand)" {
+        [Талдау хранилищесі\nЭКГ деректері · Жазба ID · Пациент ID\nДәрігер диагнозы · Пікір]  as AST  #BFDBFE
+        [Аутентификация хранилищесі\nПайдаланушы · JWT таңбалауышы]                             as AUS  #BFDBFE
+    }
+
+    package "Деректер қабаты" {
+        [React Query\nКэштеу · Кэшті жаңарту]          as RQ  #BFDBFE
+        [Axios API клиенті\nBearer таңбалауыш перехватчигі]  as AX  #BFDBFE
+    }
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  1-ҚАБАТ — БЭКЕНД
+' ═══════════════════════════════════════════════════════════════════════════
+package "Бэкенд  /  FastAPI  ·  Python 3.11" <<Rectangle>> {
+
+    package "REST API  /api/..." {
+        [POST  /auth/login\nPOST  /auth/register]               as R_AUTH  #D1FAE5
+        [GET   /users/me]                                       as R_ME    #D1FAE5
+        [POST  /ecg/analyze]                                    as R_ANA   #D1FAE5
+        [GET   /ecg/records\nPATCH /ecg/records/{id}/diagnosis] as R_REC   #D1FAE5
+        [GET   /ecg/patients]                                   as R_PAT   #D1FAE5
+    }
+
+    package "Тәуелділіктер  (FastAPI DI)" {
+        [JWT декодтау\n→ Ағымдағы пайдаланушы]    as DEP_JWT  #A7F3D0
+        [SQLAlchemy сессиясы\n→ Дерекқор сессиясы] as DEP_ORM  #A7F3D0
+    }
+
+    package "Қызмет қабаты" {
+        [Модель қызметі\n<<синглтон>>\nСалмақтар бірінші шақыруда жүктеледі]  as SVC_ML  #A7F3D0
+    }
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  2-ҚАБАТ — МЖ КОНВЕЙЕРІ
+' ═══════════════════════════════════════════════════════════════════════════
+package "МЖ Конвейері  /  PyTorch" <<Rectangle>> {
+
+    [Z-score\nНормализация\n(жетекші бойынша)]                       as NORM  #EDE9FE
+    [1-Д CNN\nБелгі экстракторы\n(конволюциялық блоктар)]            as CNN   #EDE9FE
+    [Трансформер энкодері\n(көп басты зейін механизмі)]              as TRF   #EDE9FE
+    [Сызықтық классификатор\nSoftmax  →  5 класс\nНОРМ · ИМ · STTC · ОБ · ГИП]  as CLF  #EDE9FE
+
+    NORM -right-> CNN
+    CNN  -right-> TRF
+    TRF  -right-> CLF
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  3-ҚАБАТ — ДЕРЕКҚОР
+' ═══════════════════════════════════════════════════════════════════════════
+package "Деректер сақтауы  /  SQLite" <<Rectangle>> {
+    database "пайдаланушылар\n──────────\nid  ·  email\nрол  ·  хэшталған_кілтсоз\nбелсенді  ·  жасалған_уакыт"  as DB_USR
+    database "жазбалар\n──────────\nдарігер_id  ·  пациент_id\nболжанган_класс  ·  ыктималдык_*\nдарігер_диагнозы  ·  дарігер_пікірі"  as DB_REC
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  БАЙЛАНЫСТАР
+' ═══════════════════════════════════════════════════════════════════════════
+
+' Интерфейс ішкі ағыны
+LP  ..>  EU  : кескіндейді
+DP  ..>  EU  : кескіндейді
+DP  ..>  EC  : кескіндейді
+DP  ..>  AD  : кескіндейді
+AD  ..>  DF  : кескіндейді (тек дәрігер)
+RP  ..>  SH  : орауышталған
+
+EU  -down->  AST : setSignal()\nsetSelectedPatient()
+AD  -down->  AST : setResult()
+AST -right-> RQ  : сұраныстарды іске қосады
+AUS -right-> RQ  : таңбалауыш қорғауы
+RQ  -right-> AX  : арқылы алынады
+
+' Интерфейс → Бэкенд
+AX  -down-> R_AUTH  : POST кіру / тіркелу
+AX  -down-> R_ME    : GET /me
+AX  -down-> R_ANA   : POST талдау\n(файл + пациент_id)
+AX  -down-> R_REC   : GET / PATCH жазбалар
+AX  -down-> R_PAT   : GET пациенттер
+
+' Бэкенд тәуелділіктері
+R_AUTH ..> DEP_JWT : тәуелді
+R_ME   ..> DEP_JWT : тәуелді
+R_ANA  ..> DEP_JWT : тәуелді
+R_ANA  ..> DEP_ORM : тәуелді
+R_REC  ..> DEP_JWT : тәуелді
+R_REC  ..> DEP_ORM : тәуелді
+R_PAT  ..> DEP_JWT : тәуелді
+R_PAT  ..> DEP_ORM : тәуелді
+
+' Талдау → МЖ
+R_ANA  -down->  SVC_ML : predict_proba_single(сигнал 12×5000)
+SVC_ML -down->  NORM   : қорытынды шығару
+
+' ORM → Дерекқор
+DEP_ORM -down-> DB_USR  : SELECT / INSERT
+DEP_ORM -down-> DB_REC  : SELECT / INSERT / UPDATE
+
+' Ескертулер
+note right of R_ANA
+  1. Файлды талдау (JSON / CSV / .dat)
+  2. МЖ қорытындысын іске қосу
+  3. Жазбаларға INSERT жасау
+  4. Ықтималдықтарды қайтару:
+     ecg_data + жазба_id
+end note
+
+note right of CLF
+  Шығыс кластары:
+  НОРМ  —  Норма
+  ИМ    —  Миокард инфаркты
+  STTC  —  СТ-Т өзгерісі / Ишемия
+  ОБ    —  Өткізгіштік бұзылысы
+  ГИП   —  Гипертрофия
+end note
+
+@enduml

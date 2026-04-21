@@ -44,10 +44,13 @@ def register(data: UserCreate, db: DbSession = ...) -> UserResponse:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered",
         )
+    valid_roles = {"doctor", "patient"}
+    role = data.role if data.role in valid_roles else "doctor"
     user = User(
         email=data.email,
         hashed_password=hash_password(data.password),
         full_name=data.full_name,
+        role=role,
     )
     db.add(user)
     db.commit()

@@ -1,0 +1,189 @@
+@startuml ECG_Analysis_Architecture
+
+' ── Global skin ────────────────────────────────────────────────────────────
+skinparam defaultFontName      "Segoe UI"
+skinparam defaultFontSize      12
+skinparam defaultTextAlignment center
+skinparam wrapWidth            160
+
+skinparam backgroundColor      #F8FAFC
+skinparam shadowing            false
+skinparam roundCorner          8
+
+skinparam ArrowColor           #475569
+skinparam ArrowThickness       1.4
+skinparam ArrowFontColor       #64748B
+skinparam ArrowFontSize        10
+
+' ── Package (layer frame) ───────────────────────────────────────────────────
+skinparam package {
+    BackgroundColor  transparent
+    BorderColor      #CBD5E1
+    BorderThickness  1.5
+    FontColor        #334155
+    FontStyle        bold
+    FontSize         13
+}
+
+' ── Component ───────────────────────────────────────────────────────────────
+skinparam component {
+    BackgroundColor  #EFF6FF
+    BorderColor      #93C5FD
+    FontColor        #1E3A5F
+    BorderThickness  1.2
+}
+
+' ── Database ────────────────────────────────────────────────────────────────
+skinparam database {
+    BackgroundColor  #FEF9C3
+    BorderColor      #F59E0B
+    FontColor        #78350F
+    BorderThickness  1.5
+}
+
+' ── Note ────────────────────────────────────────────────────────────────────
+skinparam note {
+    BackgroundColor  #F1F5F9
+    BorderColor      #94A3B8
+    FontColor        #475569
+    FontSize         10
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  LAYER 0 — FRONTEND
+' ═══════════════════════════════════════════════════════════════════════════
+package "Browser  /  Frontend" <<Rectangle>> {
+
+    package "Pages" {
+        [LoginPage\n/login]         as LP  #DBEAFE
+        [DashboardPage\n/]          as DP  #DBEAFE
+        [RecordsPage\n/records]     as RP  #DBEAFE
+    }
+
+    package "UI Components" {
+        [ECGUpload\n+ PatientSelector]          as EU  #DBEAFE
+        [ECGChart\nChart.js · 12 leads]         as EC  #DBEAFE
+        [AnalysisDashboard\nRecharts · PDF]     as AD  #DBEAFE
+        [DiagnosisForm]                         as DF  #DBEAFE
+        [AppShell · NavLink]                    as SH  #DBEAFE
+    }
+
+    package "State Management  (Zustand)" {
+        [analysisStore\necgData · recordId · patientId\ndoctor diagnosis · comment]  as AST  #BFDBFE
+        [authStore\nuser · JWT token]                                                as AUS  #BFDBFE
+    }
+
+    package "Data Layer" {
+        [React Query\ncaching · cache invalidation]  as RQ  #BFDBFE
+        [Axios apiClient\nBearer token interceptor]  as AX  #BFDBFE
+    }
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  LAYER 1 — BACKEND
+' ═══════════════════════════════════════════════════════════════════════════
+package "Backend  /  FastAPI  ·  Python 3.11" <<Rectangle>> {
+
+    package "REST API  /api/..." {
+        [POST  /auth/login\nPOST  /auth/register]           as R_AUTH    #D1FAE5
+        [GET   /users/me]                                   as R_ME      #D1FAE5
+        [POST  /ecg/analyze]                                as R_ANA     #D1FAE5
+        [GET   /ecg/records\nPATCH /ecg/records/{id}/diagnosis]  as R_REC  #D1FAE5
+        [GET   /ecg/patients]                               as R_PAT     #D1FAE5
+    }
+
+    package "Dependencies  (FastAPI DI)" {
+        [JWT decode\n→ CurrentUser]           as DEP_JWT  #A7F3D0
+        [SQLAlchemy Session\n→ DbSession]     as DEP_ORM  #A7F3D0
+    }
+
+    package "Service Layer" {
+        [ModelService\n<<singleton>>\nlazy-loads weights on first call]  as SVC_ML  #A7F3D0
+    }
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  LAYER 2 — ML PIPELINE
+' ═══════════════════════════════════════════════════════════════════════════
+package "ML Pipeline  /  PyTorch" <<Rectangle>> {
+
+    [Z-score\nNormalization\n(per lead)]              as NORM  #EDE9FE
+    [1-D CNN\nFeature Extractor\n(convolutional blocks)]  as CNN   #EDE9FE
+    [Transformer Encoder\n(multi-head attention)]     as TRF   #EDE9FE
+    [Linear Classifier\nSoftmax  →  5 classes\nNORM · MI · STTC · CD · HYP]  as CLF  #EDE9FE
+
+    NORM -right-> CNN
+    CNN  -right-> TRF
+    TRF  -right-> CLF
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  LAYER 3 — DATABASE
+' ═══════════════════════════════════════════════════════════════════════════
+package "Persistence  /  SQLite" <<Rectangle>> {
+    database "users\n──────────\nid  ·  email\nrole  ·  hashed_password\nis_active  ·  created_at"  as DB_USR
+    database "records\n──────────\ndoctor_id  ·  patient_id\npredicted_class  ·  prob_*\ndoctor_diagnosis  ·  doctor_comment"  as DB_REC
+}
+
+' ═══════════════════════════════════════════════════════════════════════════
+'  CONNECTIONS
+' ═══════════════════════════════════════════════════════════════════════════
+
+' Frontend internal flow
+LP  ..>  EU  : renders
+DP  ..>  EU  : renders
+DP  ..>  EC  : renders
+DP  ..>  AD  : renders
+AD  ..>  DF  : renders (doctor only)
+RP  ..>  SH  : wrapped by
+
+EU  -down->  AST : setSignal()\nsetSelectedPatient()
+AD  -down->  AST : setResult()
+AST -right-> RQ  : triggers queries
+AUS -right-> RQ  : token guard
+RQ  -right-> AX  : fetches via
+
+' Frontend → Backend
+AX  -down-> R_AUTH  : POST login / register
+AX  -down-> R_ME    : GET /me
+AX  -down-> R_ANA   : POST analyze\n(multipart file + patient_id)
+AX  -down-> R_REC   : GET / PATCH records
+AX  -down-> R_PAT   : GET patients
+
+' Backend dependencies
+R_AUTH ..> DEP_JWT : depends
+R_ME   ..> DEP_JWT : depends
+R_ANA  ..> DEP_JWT : depends
+R_ANA  ..> DEP_ORM : depends
+R_REC  ..> DEP_JWT : depends
+R_REC  ..> DEP_ORM : depends
+R_PAT  ..> DEP_JWT : depends
+R_PAT  ..> DEP_ORM : depends
+
+' Analyze → ML
+R_ANA  -down->  SVC_ML : predict_proba_single(signal 12×5000)
+SVC_ML -down->  NORM   : inference
+
+' ORM → DB
+DEP_ORM -down-> DB_USR  : SELECT / INSERT
+DEP_ORM -down-> DB_REC  : SELECT / INSERT / UPDATE
+
+' Notes
+note right of R_ANA
+  1. Parse file (JSON / CSV / .dat)
+  2. Run ML inference
+  3. INSERT into records
+  4. Return probabilities +
+     ecg_data + record_id
+end note
+
+note right of CLF
+  Output classes:
+  NORM  —  Normal
+  MI    —  Myocardial Infarction
+  STTC  —  ST-T Change / Ischemia
+  CD    —  Conduction Disorder
+  HYP   —  Hypertrophy
+end note
+
+@enduml
