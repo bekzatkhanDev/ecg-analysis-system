@@ -11,6 +11,11 @@ RUN npm ci --frozen-lockfile
 
 COPY . .
 
+# VITE_API_BASE_URL is baked into the JS bundle at build time.
+# In Docker, nginx proxies /api/ to the backend, so a relative path is correct.
+ARG VITE_API_BASE_URL=/api
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
+
 RUN npm run build
 
 
