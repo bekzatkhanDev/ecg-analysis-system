@@ -36,13 +36,15 @@ function RecordCard({ record }: { record: RecordResponse }) {
   const user = useAuthStore((state) => state.user);
   const isDoctor = user?.role === "doctor";
 
-  const probs: [string, number][] = [
-    ["NORM", record.prob_norm],
-    ["MI", record.prob_mi],
-    ["STTC", record.prob_sttc],
-    ["CD", record.prob_cd],
-    ["HYP", record.prob_hyp],
-  ].sort((a, b) => b[1] - a[1]);
+  const probs = (
+    [
+      ["NORM", record.prob_norm],
+      ["MI", record.prob_mi],
+      ["STTC", record.prob_sttc],
+      ["CD", record.prob_cd],
+      ["HYP", record.prob_hyp],
+    ] as [string, number][]
+  ).sort((a, b) => b[1] - a[1]);
 
   const dateStr = new Date(record.created_at).toLocaleString();
 
